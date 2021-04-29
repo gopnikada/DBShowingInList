@@ -3,17 +3,15 @@ package com.example.dbsimple;
 public class Contact {
     int _id;
     String _name;
-    String _phone_number;
+
     public Contact(){   }
-    public Contact(int id, String name, String _phone_number){
+    public Contact(int id, String name){
         this._id = id;
         this._name = name;
-        this._phone_number = _phone_number;
     }
 
-    public Contact(String name, String _phone_number){
+    public Contact(String name){
         this._name = name;
-        this._phone_number = _phone_number;
     }
     public int getID(){
         return this._id;
@@ -31,11 +29,4 @@ public class Contact {
         this._name = name;
     }
 
-    public String getPhoneNumber(){
-        return this._phone_number;
-    }
-
-    public void setPhoneNumber(String phone_number){
-        this._phone_number = phone_number;
-    }
 }
