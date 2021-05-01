@@ -35,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingTop="250dp">
+            android:paddingTop="20dp">
 
         </LinearLayout>
 
@@ -44,6 +44,20 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:id="@+id/deleteAllBtn"
+            android:text="Delete"
            />
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/etInputName"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Add"
+            android:id="@+id/addStudentBtn"
+            />
     </LinearLayout>
 </LinearLayout>

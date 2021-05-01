@@ -9,7 +9,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -20,14 +22,14 @@ public class MainActivity extends AppCompatActivity  {
     ListView tvTimestamps;
     ListView tvIds;
     Button deleteAllBtn;
+    Button addStudentBtn;
+    EditText etInputName;
     //-----------------------------------------------------------------------
     List<String> namesList = new ArrayList<String>();
     List<String> stampsList = new ArrayList<String>();
     List<Integer> idsList = new ArrayList<Integer>();
 
-    public void restartActivity()
-    {
-        // do your work Here
+    public void restartActivity(){
         Intent intent= new Intent(MainActivity.this, MainActivity.class);
         startActivity(intent);
     }
@@ -42,6 +44,8 @@ public class MainActivity extends AppCompatActivity  {
         tvTimestamps = (ListView) findViewById(R.id.tvTimestamps);
         tvIds = (ListView) findViewById(R.id.tvIds);
         deleteAllBtn = (Button) findViewById(R.id.deleteAllBtn);
+        addStudentBtn = (Button) findViewById(R.id.addStudentBtn);
+        etInputName = (EditText) findViewById(R.id.etInputName);
 
         DatabaseHandler db = new DatabaseHandler(this);
 
@@ -57,7 +61,16 @@ public class MainActivity extends AppCompatActivity  {
             }
         });
 //-----------------------------------------------------------------------
+        addStudentBtn.setOnClickListener(new View.OnClickListener() {
 
+            @Override
+            public void onClick(View view) {
+                //Toast.makeText(getApplicationContext(),etInputName.getText() ,Toast.LENGTH_SHORT).show();
+                db.addStudent(new Student(String.valueOf(etInputName.getText())));
+                restartActivity();
+            }
+        });
+//-----------------------------------------------------------------------
 
         if(db.getAllStudents().size() == 0) {
            db.getFirstNStudents(2).forEach(student -> db.addStudent(student));
