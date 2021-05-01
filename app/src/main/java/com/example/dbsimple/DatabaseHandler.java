@@ -15,7 +15,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String TABLE_CONTACTS = "contacts";
     private static final String KEY_ID = "id";
     private static final String KEY_NAME = "name";
-    private static final String KEY_TIMESTAMP = "timestamp1";
+    private static final String KEY_TIMESTAMP = "timestamp";
 
 
 
@@ -109,14 +109,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
     public List<String> getTimeStamps(){
         List<String> stampsList = new ArrayList<String>();
-        String selectQuery = "SELECT  * FROM " + TABLE_CONTACTS;
+        String selectQuery = "SELECT "+"datetime("+KEY_TIMESTAMP+", 'unixepoch')"+" FROM " + TABLE_CONTACTS;
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         if (cursor.moveToFirst()) {
             do {
                 String stamp;
-                stamp = cursor.getString(2);
+                stamp = cursor.getString(0);
                 // Adding contact to list
                 stampsList.add(String.valueOf(stamp));
                 System.out.println("STTTTTTTTTTTTTTTAMP" + stamp);
