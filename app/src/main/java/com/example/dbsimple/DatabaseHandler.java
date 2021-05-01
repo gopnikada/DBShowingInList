@@ -119,10 +119,26 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 stamp = cursor.getString(0);
                 // Adding contact to list
                 stampsList.add(String.valueOf(stamp));
-                System.out.println("STTTTTTTTTTTTTTTAMP" + stamp);
             } while (cursor.moveToNext());
         }
 
         return stampsList;
+    }
+    public List<Integer> getIds(){
+        List<Integer> idsList = new ArrayList<Integer>();
+        String selectQuery = "SELECT "+KEY_ID+" FROM " + TABLE_CONTACTS;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                Integer id;
+                id = cursor.getInt(0);
+                // Adding contact to list
+                idsList.add(id);
+            } while (cursor.moveToNext());
+        }
+
+        return idsList;
     }
 }

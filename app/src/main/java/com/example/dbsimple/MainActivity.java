@@ -5,20 +5,21 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    ListView listView;
-    ListView listView2;
-    List<String> listItem= new ArrayList<String>();
-    List<String> listItem2= new ArrayList<String>();
+    ListView tvNames;
+    ListView tvTimestamps;
+    ListView tvIds;
+
+    List<String> namesList = new ArrayList<String>();
+    List<String> stampsList = new ArrayList<String>();
+    List<Integer> idsList = new ArrayList<Integer>();
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -27,39 +28,42 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         DatabaseHandler db = new DatabaseHandler(this);
 
-
-
-//        db.addContact(new Contact("Ravi", "9100000000"));
-//        db.addContact(new Contact("Srinivas", "9199999999"));
-//        db.addContact(new Contact("Tommy", "9522222222"));
         if(db.getAllContacts().size()==0) {
             db.addContact(new Contact("Karthik ANDREY"));
             db.addContact(new Contact("Oleg Vasya"));
         }
 
 
-        listView=(ListView)findViewById(R.id.listView);
-        listView2 = (ListView) findViewById(R.id.listView2);
-       //textView=(TextView)findViewById(R.id.textView);
+        tvNames =(ListView)findViewById(R.id.tvNames);
+        tvTimestamps = (ListView) findViewById(R.id.tvTimestamps);
+        tvIds = (ListView) findViewById(R.id.tvIds);
 
 
-        db.getAllContacts().forEach(contact -> listItem.add(contact.getName()));
+
+        db.getAllContacts().forEach(contact -> namesList.add(contact.getName()));
+
         for (String ts: db.getTimeStamps()) {
-            listItem2.add(ts+"23");
+            stampsList.add(ts);
         }
 
+        Iterator<Integer> idsIterator = db.getIds().iterator();
+        while(idsIterator.hasNext()) idsList.add(idsIterator.next());
 
 
 
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, android.R.id.text1, listItem);
 
-        listView.setAdapter(adapter);
+        final ArrayAdapter<String> namesAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, android.R.id.text1, namesList);
+        tvNames.setAdapter(namesAdapter);
 
-        final ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, android.R.id.text1, listItem2);
+        final ArrayAdapter<String> stampsAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, android.R.id.text1, stampsList);
+        tvTimestamps.setAdapter(stampsAdapter);
 
-        listView2.setAdapter(adapter2);
+        final ArrayAdapter<Integer> idsAdapter = new ArrayAdapter<Integer>(this,
+                android.R.layout.simple_list_item_1, android.R.id.text1, idsList);
+
+        tvIds.setAdapter(idsAdapter);
 
 
     }

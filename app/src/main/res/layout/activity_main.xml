@@ -8,13 +8,18 @@
     android:orientation="horizontal">
 
     <ListView
-        android:id="@+id/listView"
+        android:id="@+id/tvIds"
+        android:layout_width="87dp"
+        android:layout_height="fill_parent" />
+    <ListView
+        android:id="@+id/tvNames"
         android:layout_width="167dp"
         android:layout_height="fill_parent" />
     <ListView
-        android:id="@+id/listView2"
+        android:id="@+id/tvTimestamps"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
       />
+
 
 </LinearLayout>
