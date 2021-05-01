@@ -16,8 +16,9 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     ListView listView;
-    TextView textView;
+    ListView listView2;
     List<String> listItem= new ArrayList<String>();
+    List<String> listItem2= new ArrayList<String>();
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -31,18 +32,22 @@ public class MainActivity extends AppCompatActivity {
 //        db.addContact(new Contact("Ravi", "9100000000"));
 //        db.addContact(new Contact("Srinivas", "9199999999"));
 //        db.addContact(new Contact("Tommy", "9522222222"));
-        db.addContact(new Contact("Karthik ANDREY"));
-        db.addContact(new Contact("Oleg Vasya"));
+        if(db.getAllContacts().size()==0) {
+            db.addContact(new Contact("Karthik ANDREY"));
+            db.addContact(new Contact("Oleg Vasya"));
+        }
 
 
         listView=(ListView)findViewById(R.id.listView);
+        listView2 = (ListView) findViewById(R.id.listView2);
        //textView=(TextView)findViewById(R.id.textView);
 
 
         db.getAllContacts().forEach(contact -> listItem.add(contact.getName()));
-       for (Contact contact: db.getAllContacts()){
-           db.deleteContact(contact);
-       }
+        for (String ts: db.getTimeStamps()) {
+            listItem2.add(ts+"23");
+        }
+
 
 
 
@@ -50,6 +55,11 @@ public class MainActivity extends AppCompatActivity {
                 android.R.layout.simple_list_item_1, android.R.id.text1, listItem);
 
         listView.setAdapter(adapter);
+
+        final ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, android.R.id.text1, listItem2);
+
+        listView2.setAdapter(adapter2);
 
 
     }

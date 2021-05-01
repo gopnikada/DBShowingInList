@@ -15,6 +15,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String TABLE_CONTACTS = "contacts";
     private static final String KEY_ID = "id";
     private static final String KEY_NAME = "name";
+    private static final String KEY_TIMESTAMP = "timestamp1";
+
 
 
     public DatabaseHandler(Context context) {
@@ -27,7 +29,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_CONTACTS + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
-                + " TEXT" + ")";
+                + KEY_TIMESTAMP + " integer(4) not null default (strftime('%s','now'))" + ")";
         db.execSQL(CREATE_CONTACTS_TABLE);
     }
 
@@ -104,5 +106,23 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         // return count
         return cursor.getCount();
+    }
+    public List<String> getTimeStamps(){
+        List<String> stampsList = new ArrayList<String>();
+        String selectQuery = "SELECT  * FROM " + TABLE_CONTACTS;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                String stamp;
+                stamp = cursor.getString(2);
+                // Adding contact to list
+                stampsList.add(String.valueOf(stamp));
+                System.out.println("STTTTTTTTTTTTTTTAMP" + stamp);
+            } while (cursor.moveToNext());
+        }
+
+        return stampsList;
     }
 }
