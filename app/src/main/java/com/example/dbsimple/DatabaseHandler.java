@@ -11,12 +11,26 @@ import java.util.List;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "contactsManager";
-    private static final String TABLE_CONTACTS = "contacts";
+    private static final String DATABASE_NAME = "studentssManager";
+    private static final String TABLE_CONTACTS = "students";
     private static final String KEY_ID = "id";
     private static final String KEY_NAME = "name";
     private static final String KEY_TIMESTAMP = "timestamp";
 
+    List<Student> studentList = new ArrayList<Student>() {{
+        add((new Student("Oleg Ivanov")));
+        add((new Student("Igor Bdsf")));
+        add((new Student("Vanya IvanfSFov")));
+        add((new Student("Stapan IvaSDGSnov")));
+        add((new Student("Jora SDF")));
+        add((new Student("Petr DA")));
+    }};
+
+    public List<Student> getFirstNStudents(int n){
+        List<Student> nStudentLsist = new ArrayList<Student>();
+        nStudentLsist = studentList.subList(0, n);
+        return nStudentLsist;
+    }
 
 
     public DatabaseHandler(Context context) {
@@ -42,17 +56,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    void addContact(Contact contact){
+    void addStudent(Student student){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put(KEY_NAME, contact.getName()); // Contact Name
+        values.put(KEY_NAME, student.getName()); // Contact Name
 
         db.insert(TABLE_CONTACTS, null, values);
         db.close();
     }
 
-    Contact getContact(int id){
+    Student getStudent(int id){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_CONTACTS, new String[] { KEY_ID,
                         KEY_NAME }, KEY_ID + "=?",
@@ -61,44 +75,44 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if (cursor != null)
             cursor.moveToFirst();
 
-        Contact contact = new Contact(Integer.parseInt(cursor.getString(0)),
+        Student student = new Student(Integer.parseInt(cursor.getString(0)),
                 cursor.getString(1));
-        return contact;
+        return student;
     }
 
-    public List<Contact> getAllContacts(){
-        List<Contact> contactList = new ArrayList<Contact>();
+    public List<Student> getAllStudents(){
+        List<Student> studentList = new ArrayList<Student>();
         String selectQuery = "SELECT  * FROM " + TABLE_CONTACTS;
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         if (cursor.moveToFirst()) {
             do {
-                Contact contact = new Contact();
-                contact.setID(Integer.parseInt(cursor.getString(0)));
-                contact.setName(cursor.getString(1));
+                Student student = new Student();
+                student.setID(Integer.parseInt(cursor.getString(0)));
+                student.setName(cursor.getString(1));
                 // Adding contact to list
-                contactList.add(contact);
+                studentList.add(student);
             } while (cursor.moveToNext());
         }
 
-        return contactList;
+        return studentList;
     }
 
-    public int updateContact(Contact contact){
+    public int updateStudent(Student student){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(KEY_NAME, contact.getName());
+        values.put(KEY_NAME, student.getName());
         return db.update(TABLE_CONTACTS, values, KEY_ID + " = ?",
-                new String[] { String.valueOf(contact.getID()) });
+                new String[] { String.valueOf(student.getID()) });
     }
-    public void deleteContact(Contact contact) {
+    public void deleteStudent(Student student) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_CONTACTS, KEY_ID + " = ?",
-                new String[] { String.valueOf(contact.getID()) });
+                new String[] { String.valueOf(student.getID()) });
         db.close();
     }
-    public int getContactsCount() {
+    public int getStudentsCount() {
         String countQuery = "SELECT  * FROM " + TABLE_CONTACTS;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);

@@ -1,16 +1,16 @@
 package com.example.dbsimple;
 
-public class Contact {
+public class Student {
     int _id;
     String _name;
 
-    public Contact(){   }
-    public Contact(int id, String name){
+    public Student(){   }
+    public Student(int id, String name){
         this._id = id;
         this._name = name;
     }
 
-    public Contact(String name){
+    public Student(String name){
         this._name = name;
     }
     public int getID(){
