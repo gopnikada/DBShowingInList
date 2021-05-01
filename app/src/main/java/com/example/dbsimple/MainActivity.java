@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity  {
     ListView tvIds;
     Button deleteAllBtn;
     Button addStudentBtn;
+    Button changeLastBtn;
     EditText etInputName;
     //-----------------------------------------------------------------------
     List<String> namesList = new ArrayList<String>();
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity  {
         deleteAllBtn = (Button) findViewById(R.id.deleteAllBtn);
         addStudentBtn = (Button) findViewById(R.id.addStudentBtn);
         etInputName = (EditText) findViewById(R.id.etInputName);
+        changeLastBtn = (Button) findViewById(R.id.changeLastBtn);
 
         DatabaseHandler db = new DatabaseHandler(this);
 
@@ -70,11 +72,24 @@ public class MainActivity extends AppCompatActivity  {
                 restartActivity();
             }
         });
+        int count = db.getAllStudents().size();
+        if(count == 0) {
+            db.getFirstNStudents(2).forEach(student -> db.addStudent(student));
+        }
+        //-----------------------------------------------------------------------
+        changeLastBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+
+
+                db.updateStudent(db.getStudent(count), "Ivanov Ivan Ivanovich");
+                restartActivity();
+            }
+        });
 //-----------------------------------------------------------------------
 
-        if(db.getAllStudents().size() == 0) {
-           db.getFirstNStudents(2).forEach(student -> db.addStudent(student));
-        }
 //-----------------------------------------------------------------------
         db.getAllStudents().forEach(student -> namesList.add(student.getName()));
 //-----------------------------------------------------------------------

@@ -59,5 +59,12 @@
             android:text="Add"
             android:id="@+id/addStudentBtn"
             />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Change Last"
+            android:id="@+id/changeLastBtn"
+            />
     </LinearLayout>
 </LinearLayout>

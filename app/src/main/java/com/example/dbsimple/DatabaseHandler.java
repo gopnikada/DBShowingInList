@@ -99,10 +99,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return studentList;
     }
 
-    public int updateStudent(Student student){
+    public int updateStudent(Student student, String newName){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(KEY_NAME, student.getName());
+        values.put(KEY_NAME, newName);
         return db.update(TABLE_CONTACTS, values, KEY_ID + " = ?",
                 new String[] { String.valueOf(student.getID()) });
     }
